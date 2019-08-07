@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.wlp.humidifier.InstrumentViewsw
+        android:id="@+id/instrumentViewsw"
+        android:layout_width="530px"
+        android:layout_height="630px"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10px"
+        />
+
+    <com.wlp.humidifier.InstrumentViewwl
+        android:id="@+id/instrumentViewwl"
+        android:layout_width="530px"
+        android:layout_height="630px"
+        android:layout_toRightOf="@+id/instrumentViewsw"
+        android:layout_alignParentTop="true"
+        />
+
+    <TextView
+        android:id="@+id/shidu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="湿     度："
+        android:drawableLeft="@mipmap/shidu"
+        android:drawablePadding="10dp"
+        android:layout_below="@+id/instrumentViewsw"
+
+        android:textSize="25sp"
+        android:layout_marginStart="20dp"
+        />
+
+    <TextView
+        android:id="@+id/shiducanshu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/shidu"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/shidu"
+        android:textSize="24sp" />
+
+
+
+    <TextView
+        android:id="@+id/wendu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="温     度："
+        android:layout_below="@+id/shidu"
+        android:drawableLeft="@mipmap/wendu"
+       android:drawablePadding="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="25sp"
+        android:layout_marginStart="20dp"
+        />
+
+    <TextView
+        android:id="@+id/wenducanshu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/wendu"
+        android:layout_alignBottom="@+id/wendu"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toRightOf="@+id/wendu"
+        android:textSize="24sp" />
+
+    <Spinner
+        android:id="@+id/spinner_shidu"
+        android:layout_width="500px"
+        android:layout_height="50dp"
+        android:layout_below="@+id/wendu"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="50dp"
+        android:entries="@array/湿度"
+        android:gravity="center"
+
+
+        />
+
+    <Button
+        android:id="@+id/sd"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:background="@drawable/bt"
+        android:layout_toRightOf="@id/spinner_shidu"
+        android:layout_below="@+id/wendu"
+        android:layout_marginTop="25dp"
+        android:drawableLeft="@mipmap/shidu"
+        android:drawablePadding="10dp"
+        android:paddingLeft="10dp"
+        android:text="湿度"
+        android:gravity="center_vertical"
+        android:textSize="17dp" />
+
+
+
+
+
+
+    <Spinner
+        android:id="@+id/spinner_wuliang"
+        android:layout_width="500px"
+        android:layout_height="50dp"
+        android:layout_below="@+id/spinner_shidu"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp"
+        android:entries="@array/雾量"
+        />
+
+    <Button
+        android:id="@+id/wl"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:background="@drawable/bt"
+        android:layout_toRightOf="@id/spinner_wuliang"
+        android:layout_below="@+id/sd"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@mipmap/wuhua"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="雾量"
+        android:textSize="17dp" />
+
+
+
+
+
+
+
+    <Spinner
+        android:id="@+id/spinner_dingshi"
+        android:layout_width="500px"
+        android:layout_height="50dp"
+        android:layout_below="@+id/spinner_wuliang"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp"
+        android:entries="@array/定时"
+        />
+
+    <Button
+        android:id="@+id/dingshi"
+        android:layout_width="300px"
+        android:layout_height="40dp"
+        android:layout_below="@+id/wl"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@id/spinner_dingshi"
+        android:background="@drawable/bt"
+        android:drawableLeft="@mipmap/dingshi"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="定时"
+        android:textColor="#000"
+        android:textSize="17dp" />
+
+  <TextView
+      android:id="@+id/shidushijishuju"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/spinner_dingshi"
+      android:layout_alignLeft="@+id/spinner_dingshi"
+      android:textSize="25dp"
+
+      />
+    <TextView
+        android:id="@+id/wendushijishuju"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shidushijishuju"
+        android:layout_alignLeft="@+id/shidushijishuju"
+        android:textSize="25dp"
+        />
+</RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="730px"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu">
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

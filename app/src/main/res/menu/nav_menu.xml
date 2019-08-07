@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_add"
+            android:icon="@mipmap/lianjie"
+            android:title="连接设备" />
+        <item
+            android:id="@+id/nav_open"
+            android:icon="@mipmap/dakai"
+            android:title="打开加湿器" />
+        <item
+            android:id="@+id/nav_close"
+            android:icon="@mipmap/guanbi"
+            android:title="关闭加湿器" />
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@mipmap/tuichu"
+            android:title="退出"/>
+    </group>
+</menu>
