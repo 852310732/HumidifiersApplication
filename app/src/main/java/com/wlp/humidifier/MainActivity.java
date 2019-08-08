@@ -374,8 +374,8 @@ public class MainActivity extends AppCompatActivity {
         // final ProgressBar bar = (ProgressBar) findViewById(R.id.progressSelf);
         //  final TextView textView = (TextView) findViewById(R.id.tvProgress);
 //测试的温湿度实际数据
-        TextView wendushijshuju = findViewById(R.id.wendushijishuju);
-        TextView shidushijishuju = findViewById(R.id.shidushijishuju);
+       // TextView wendushijshuju = findViewById(R.id.wendushijishuju);
+      //  TextView shidushijishuju = findViewById(R.id.shidushijishuju);
 
         if (messageEvent.length == 7 && messageEvent[0] == (byte) 0xeb && messageEvent[6] == (byte) 0x90) {    //判断头尾数据
             // byte[] config = new byte[]{messageEvent[1], messageEvent[2], messageEvent[3], messageEvent[4]};//类型，控制令，高低位合成数组
@@ -488,7 +488,7 @@ public class MainActivity extends AppCompatActivity {
                         double d = ((c / 65536.0) * 175.72 - 46.85);
                         String cc = String.format("%.2f", d);
                         wenducanshu.setText(cc + "℃");
-                        wendushijshuju.setText("温度：" + (messageEvent[3] & 0xFF) + "+" + (messageEvent[4] & 0xFF));//原始数据   测试
+                      //  wendushijshuju.setText("温度：" + (messageEvent[3] & 0xFF) + "+" + (messageEvent[4] & 0xFF));//原始数据   测试
                         break;
                     case 0x01:
                         int b = messageEvent[3];
@@ -496,7 +496,7 @@ public class MainActivity extends AppCompatActivity {
                         double g = (shidu / 65536.0) * 125 - 6;
                         String bb = String.format("%.2f", g);
                         shiducanshu.setText(bb + "%");           //液态水的湿度
-                        shidushijishuju.setText("湿度：" + (messageEvent[3] & 0xFF) + "+" + (messageEvent[4] & 0xFF)); //原始数据 测试
+                      //  shidushijishuju.setText("湿度：" + (messageEvent[3] & 0xFF) + "+" + (messageEvent[4] & 0xFF)); //原始数据 测试
                         break;
 
 
