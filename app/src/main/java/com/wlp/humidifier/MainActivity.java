@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] strs = null;
     private String str = "-1";
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +57,12 @@ public class MainActivity extends AppCompatActivity {
         Button dingshi = (Button) findViewById(R.id.dingshi);
         TextView shidu = findViewById(R.id.shidu);
         TextView wendu = findViewById(R.id.wendu);
+        getSupportActionBar().isShowing(); //显示侧拉菜单
         Spinner spinner_shidu = (Spinner) findViewById(R.id.spinner_shidu);
         Spinner spinner_wuliang = (Spinner) findViewById(R.id.spinner_wuliang);
         Spinner spinner_dingshi = (Spinner) findViewById(R.id.spinner_dingshi);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.openDrawer(Gravity.START);
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -129,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         /**************************  下拉菜单选项 雾量  ****************************************/
 
         //原始string数组
-        final String[] spinnerItems_wl = {"雾量 小", "雾量 中", "雾量 大"};
+        final String[] spinnerItems_wl = {"雾量 1", "雾量 2", "雾量 3", "雾量 4", "雾量 5"};
         //简单的string数组适配器：样式res，数组
         ArrayAdapter<String> spinnerAdapter_wl = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_spinner_item, spinnerItems_wl);
@@ -141,18 +147,25 @@ public class MainActivity extends AppCompatActivity {
         spinner_wuliang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if ("雾量 小".equals(parent.getItemAtPosition(position).toString())) {
+                if ("雾量 1".equals(parent.getItemAtPosition(position).toString())) {
                     commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x11, 0x00, 0x00, 0x00, (byte) 0x90};
                 }
-                if ("雾量 中".equals(parent.getItemAtPosition(position).toString())) {
+                if ("雾量 2".equals(parent.getItemAtPosition(position).toString())) {
                     commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x12, 0x00, 0x00, 0x00, (byte) 0x90};
                 }
-                if ("雾量 大".equals(parent.getItemAtPosition(position).toString())) {
+                if ("雾量 3".equals(parent.getItemAtPosition(position).toString())) {
                     commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x13, 0x00, 0x00, 0x00, (byte) 0x90};
+                }
+                if ("雾量 4".equals(parent.getItemAtPosition(position).toString())) {
+                    commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x14, 0x00, 0x00, 0x00, (byte) 0x90};
+                }
+                if ("雾量 5".equals(parent.getItemAtPosition(position).toString())) {
+                    commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x15, 0x00, 0x00, 0x00, (byte) 0x90};
                 }
             }
 
             @Override
+
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
@@ -371,14 +384,7 @@ public class MainActivity extends AppCompatActivity {
         TextView wenducanshu = findViewById(R.id.wenducanshu);
         final InstrumentViewsw viewByIdsw = (InstrumentViewsw) findViewById(R.id.instrumentViewsw);
         final InstrumentViewwl viewByIdwl = (InstrumentViewwl) findViewById(R.id.instrumentViewwl);
-        // final ProgressBar bar = (ProgressBar) findViewById(R.id.progressSelf);
-        //  final TextView textView = (TextView) findViewById(R.id.tvProgress);
-//测试的温湿度实际数据
-       // TextView wendushijshuju = findViewById(R.id.wendushijishuju);
-      //  TextView shidushijishuju = findViewById(R.id.shidushijishuju);
-
         if (messageEvent.length == 7 && messageEvent[0] == (byte) 0xeb && messageEvent[6] == (byte) 0x90) {    //判断头尾数据
-            // byte[] config = new byte[]{messageEvent[1], messageEvent[2], messageEvent[3], messageEvent[4]};//类型，控制令，高低位合成数组
             Log.d(TAG, "检验");
             if (messageEvent[1] == 0x01) { //控指令符合
                 switch (messageEvent[2]) {//雾量
@@ -386,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
                         new Thread() {
                             @Override
                             public void run() {
-                                while (a < 33.3) {
+                                while (a < 20) {
                                     a++;
                                     try {
                                         Thread.sleep(7);
@@ -395,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     viewByIdwl.setProgress(a);
                                 }
-                                while (a > 33.3) {
+                                while (a > 20) {
                                     a--;
                                     try {
                                         Thread.sleep(7);
@@ -411,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
                         new Thread() {
                             @Override
                             public void run() {
-                                while (a < 66.6) {
+                                while (a < 40) {
                                     a++;
                                     try {
                                         Thread.sleep(7);
@@ -420,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     viewByIdwl.setProgress(a);
                                 }
-                                while (a > 66.6) {
+                                while (a > 40) {
                                     a--;
                                     try {
                                         Thread.sleep(7);
@@ -436,7 +442,57 @@ public class MainActivity extends AppCompatActivity {
                         new Thread() {
                             @Override
                             public void run() {
-                                while (a < 99.9) {
+                                while (a < 60) {
+                                    a++;
+                                    try {
+                                        Thread.sleep(7);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    viewByIdwl.setProgress(a);
+                                }
+                                while (a > 60) {
+                                    a--;
+                                    try {
+                                        Thread.sleep(7);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    viewByIdwl.setProgress(a);
+                                }
+                            }
+                        }.start();
+                        break;
+                    case 0x14:   //4档
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                while (a < 80) {
+                                    a++;
+                                    try {
+                                        Thread.sleep(7);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    viewByIdwl.setProgress(a);
+                                }
+                                while (a > 80) {
+                                    a--;
+                                    try {
+                                        Thread.sleep(7);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    viewByIdwl.setProgress(a);
+                                }
+                            }
+                        }.start();
+                        break;
+                    case 0x15:   //5档
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                while (a < 100) {
                                     a++;
                                     try {
                                         Thread.sleep(7);
@@ -488,7 +544,6 @@ public class MainActivity extends AppCompatActivity {
                         double d = ((c / 65536.0) * 175.72 - 46.85);
                         String cc = String.format("%.2f", d);
                         wenducanshu.setText(cc + "℃");
-                      //  wendushijshuju.setText("温度：" + (messageEvent[3] & 0xFF) + "+" + (messageEvent[4] & 0xFF));//原始数据   测试
                         break;
                     case 0x01:
                         int b = messageEvent[3];
@@ -496,7 +551,6 @@ public class MainActivity extends AppCompatActivity {
                         double g = (shidu / 65536.0) * 125 - 6;
                         String bb = String.format("%.2f", g);
                         shiducanshu.setText(bb + "%");           //液态水的湿度
-                      //  shidushijishuju.setText("湿度：" + (messageEvent[3] & 0xFF) + "+" + (messageEvent[4] & 0xFF)); //原始数据 测试
                         break;
 
 

@@ -104,7 +104,7 @@ public class InstrumentViewwl extends View {
     /**
      * 刻度盘上数字的数量
      */
-    private int figureCount = 4;
+    private int figureCount = 6;
 
 
     public InstrumentViewwl(Context context) {
@@ -147,7 +147,7 @@ public class InstrumentViewwl extends View {
         centerPoint[1] = viewHeight / 2;
         inCircleRedius = outCircleRadius - outAndInDistance - inCircleWidth / 2;
         startAngle = 150;
-        allAngle = 240;
+        allAngle =240;
         dialOutCircleDistance = inCircleWidth;
 
         dialCount = 50;
@@ -190,7 +190,7 @@ public class InstrumentViewwl extends View {
             mPaint.setTextAlign(Paint.Align.CENTER);
             canvas.save();
             canvas.rotate(angle+90,pointFromAngleAndRadius[0],pointFromAngleAndRadius[1]);
-            canvas.drawText(figure/33+"档",pointFromAngleAndRadius[0],pointFromAngleAndRadius[1],mPaint);
+            canvas.drawText(figure/20+"档",pointFromAngleAndRadius[0],pointFromAngleAndRadius[1],mPaint);
             canvas.restore();
         }
     }
@@ -290,7 +290,7 @@ public class InstrumentViewwl extends View {
 //此时求出来的baseline可以使文字竖直居中
 
         float baseLine2 = outCircleRadius / 20f * 11 - 3 * (fontMetrics.bottom + fontMetrics.top) + centerPoint[1];
-        canvas.drawText(progress/33 + "档", centerPoint[0], baseLine2, mPaint);
+        canvas.drawText(progress/20 + "档", centerPoint[0], baseLine2, mPaint);
 
 
     }
