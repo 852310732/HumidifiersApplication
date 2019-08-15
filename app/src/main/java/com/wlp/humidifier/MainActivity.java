@@ -1,6 +1,7 @@
 package com.wlp.humidifier;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -22,11 +24,12 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,17 +55,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ActivityCollector.addActivity(this);//每启动一个Activity，就将其加入到activity列表中
         EventBus.getDefault().register(this);
+        android.support.v7.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Button sd = (Button) findViewById(R.id.sd);
         Button wl = (Button) findViewById(R.id.wl);
         Button dingshi = (Button) findViewById(R.id.dingshi);
         TextView shidu = findViewById(R.id.shidu);
         TextView wendu = findViewById(R.id.wendu);
-        getSupportActionBar().isShowing(); //显示侧拉菜单
         Spinner spinner_shidu = (Spinner) findViewById(R.id.spinner_shidu);
         Spinner spinner_wuliang = (Spinner) findViewById(R.id.spinner_wuliang);
         Spinner spinner_dingshi = (Spinner) findViewById(R.id.spinner_dingshi);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.openDrawer(Gravity.START);
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -219,8 +223,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 str = "a";
                 putShow();
-                // byte[] aaaaa = new byte[]{(byte)0xEA,0x23,0x7f};
-                //   int bb =aaaaa[2];
+
             }
         });
         /******************* 雾量  **********************************************/
@@ -251,6 +254,19 @@ public class MainActivity extends AppCompatActivity {
         sendBroadcast(intent);
         Log.e(TAG, "握手" + commind_ws);
     }
+
+    /******************************************************************************************/
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+
+        //android.R.id.home对应应用程序图标的id
+        if (item.getItemId() == android.R.id.home) {
+            mDrawerLayout.openDrawer(Gravity.START);
+            return true;
+        }
+         return super.onOptionsItemSelected(item);
+    }
+
 
     /*************************  加湿器显示部分  ****************************************/
 
@@ -352,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 break;
-            case "k":       //开启加湿器
+            case "k":       //加湿器
                 if (messageEvent.length == 5 && messageEvent[1] == 0x02 && messageEvent[0] == 0x03 && messageEvent[3] == 0x00) {
 
                     Intent open = new Intent(actionshuju);
@@ -382,127 +398,26 @@ public class MainActivity extends AppCompatActivity {
 
         TextView shiducanshu = findViewById(R.id.shiducanshu);
         TextView wenducanshu = findViewById(R.id.wenducanshu);
-        final InstrumentViewsw viewByIdsw = (InstrumentViewsw) findViewById(R.id.instrumentViewsw);
-        final InstrumentViewwl viewByIdwl = (InstrumentViewwl) findViewById(R.id.instrumentViewwl);
+        DashboardViewsw mDashboardView3 = (DashboardViewsw) findViewById(R.id.viewsw);
+        DashboardViewwl mDashboardView2 = (DashboardViewwl) findViewById(R.id.viewwl);
         if (messageEvent.length == 7 && messageEvent[0] == (byte) 0xeb && messageEvent[6] == (byte) 0x90) {    //判断头尾数据
             Log.d(TAG, "检验");
             if (messageEvent[1] == 0x01) { //控指令符合
                 switch (messageEvent[2]) {//雾量
                     case 0x11:  //1档
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                while (a < 20) {
-                                    a++;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                                while (a > 20) {
-                                    a--;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                            }
-                        }.start();
+                        mDashboardView2.setCreditValueWithAnim(2);
                         break;
                     case 0x12:    //2档
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                while (a < 40) {
-                                    a++;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                                while (a > 40) {
-                                    a--;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                            }
-                        }.start();
+                        mDashboardView2.setCreditValueWithAnim(4);
                         break;
                     case 0x13:   //3档
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                while (a < 60) {
-                                    a++;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                                while (a > 60) {
-                                    a--;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                            }
-                        }.start();
+                        mDashboardView2.setCreditValueWithAnim(6);
                         break;
                     case 0x14:   //4档
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                while (a < 80) {
-                                    a++;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                                while (a > 80) {
-                                    a--;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                            }
-                        }.start();
+                        mDashboardView2.setCreditValueWithAnim(8);
                         break;
                     case 0x15:   //5档
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                while (a < 100) {
-                                    a++;
-                                    try {
-                                        Thread.sleep(7);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    viewByIdwl.setProgress(a);
-                                }
-                            }
-                        }.start();
+                        mDashboardView2.setCreditValueWithAnim(10);
                         break;
                 }
             } else if (messageEvent[1] == 0x12) {          //有无水传感器  会报警
@@ -510,31 +425,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (messageEvent[1] == 0x32) {          // 水位
                 final int d = messageEvent[4];  //转换10进制
-                new Thread() {
-                    @Override
-                    public void run() {
-                        while (b < 20 * d) {
-                            b++;
-                            try {
-                                Thread.sleep(7);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            viewByIdsw.setProgress(b);
-                        }
-                        while (b > 20 * d) {
-                            b--;
-                            try {
-                                Thread.sleep(7);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            viewByIdsw.setProgress(b);
-                        }
-                    }
-                }.start();
-
-
+                mDashboardView3.setCreditValueWithAnim(d);  /////////////////////////////水位仪表盘  识别1-10  显示无延迟  0有延迟
             } else if (messageEvent[1] == 0x11) {          //温度 /湿度
                 switch (messageEvent[2]) {
                     case 0x00:
