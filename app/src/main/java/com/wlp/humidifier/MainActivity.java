@@ -34,11 +34,10 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    int a, b, c, d, e;   //a 雾量   b  水位
     byte[] commond_sd;
     byte[] commind_ws;
     byte[] commond_wl;
-    byte[] commond_ds, commond_whj;
+    byte[] commond_ds;
     byte[] endcommond, opencommond, commond_js;
 
     public static final String action = "com.example.broadcast";
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String actionend = "com.example.end.broadcast";
     private static final String TAG = "ble_tag";
     private String[] strs = null;
-    private String str = "-1";
+    public String str = "-1";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -256,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /******************************************************************************************/
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {  //标题栏左边打开侧拉菜单button
         // TODO Auto-generated method stub
 
         //android.R.id.home对应应用程序图标的id
@@ -398,8 +397,8 @@ public class MainActivity extends AppCompatActivity {
 
         TextView shiducanshu = findViewById(R.id.shiducanshu);
         TextView wenducanshu = findViewById(R.id.wenducanshu);
-        DashboardViewsw mDashboardView3 = (DashboardViewsw) findViewById(R.id.viewsw);
-        DashboardViewwl mDashboardView2 = (DashboardViewwl) findViewById(R.id.viewwl);
+        DashboardViewsw mDashboardView3 =  findViewById(R.id.viewsw);
+        DashboardViewwl mDashboardView2 =  findViewById(R.id.viewwl);
         if (messageEvent.length == 7 && messageEvent[0] == (byte) 0xeb && messageEvent[6] == (byte) 0x90) {    //判断头尾数据
             Log.d(TAG, "检验");
             if (messageEvent[1] == 0x01) { //控指令符合
@@ -425,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (messageEvent[1] == 0x32) {          // 水位
                 final int d = messageEvent[4];  //转换10进制
-                mDashboardView3.setCreditValueWithAnim(d);  /////////////////////////////水位仪表盘  识别1-10  显示无延迟  0有延迟
+                mDashboardView3.setCreditValueWithAnim(d);  //                       水位仪表盘  识别1-10  显示无延迟  0有延迟
             } else if (messageEvent[1] == 0x11) {          //温度 /湿度
                 switch (messageEvent[2]) {
                     case 0x00:

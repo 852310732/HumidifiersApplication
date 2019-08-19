@@ -348,7 +348,6 @@ public class SearchBtActivity extends AppCompatActivity {
             super.onCharacteristicChanged(gatt, characteristic);
             final byte[] data = characteristic.getValue();
             Log.e(TAG, "Change回调的数据" + Arrays.toString(data));
-           // byte[] C = new byte[]{(byte) 0xeb,0x11,0x00,0x55,(byte) 0xAA,0x00,(byte) 0x90};
             EventBus.getDefault().post(data);//换成data
         }
 

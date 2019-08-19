@@ -405,6 +405,8 @@ public class DashboardViewwl extends View {
             return "雾量较小";
         } else if (mSolidCreditValue == 2) {
             return "雾量小";
+        }else if (mSolidCreditValue == 0) {
+            return "关";
         }
         return "关";
     }

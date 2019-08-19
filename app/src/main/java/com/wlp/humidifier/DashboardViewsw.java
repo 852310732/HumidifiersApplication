@@ -374,7 +374,7 @@ public class DashboardViewsw extends View {
     }
 
     /**
-     * 相对起始角度计算信用分所对应的角度大小
+     * 相对起始角度计算水量所对应的角度大小
      */
     private float calculateRelativeAngleWithValue(int value) {
         float degreePerSection = 1f * mSweepAngle / mSection;   //240 除以分数
@@ -393,23 +393,20 @@ public class DashboardViewsw extends View {
     }
 
     /**
-     * 信用分对应信用描述
+     * 水量描述
      */
-    private String calculateCreditDescription() {
-        if (mSolidCreditValue > 4) {
+    private String calculateCreditDescription() {    //1-10为参数
+        if (mSolidCreditValue >= 6) {   //大于2 L
             return "水量充足";
-        } else if (mSolidCreditValue > 1) {
+        } else if (mSolidCreditValue >= 3) {    //大于0.5L
             return "水量适中";
-        } else if (mSolidCreditValue >0.5) {
+        } else if (mSolidCreditValue > 1) {
             return "需要加水";
+        } else if (mSolidCreditValue == 1) {
+            return "缺水";
         }
         return "缺水";
     }
-
-    public int getCreditValue() {
-        return mCreditValue;
-    }
-
     /**
      * 设置信用值
      *
