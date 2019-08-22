@@ -290,7 +290,7 @@ public class DashboardViewsw extends View {
         mPaint.setTextSize(sp2px(18));
         mPaint.setTextAlign(Paint.Align.CENTER);
         String value = String.valueOf(mSolidCreditValue/2.0);
-        canvas.drawText(value+"L", mCenterX, mCenterY + dp2px(30), mPaint);
+        canvas.drawText(value+"L", mCenterX+ dp2px(1), mCenterY + dp2px(30), mPaint);
 
         /**
          * 画表头

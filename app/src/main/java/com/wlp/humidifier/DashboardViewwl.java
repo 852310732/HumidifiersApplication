@@ -34,9 +34,9 @@ public class DashboardViewwl extends View {
     private int mStartAngle = 150; // 起始角度
     private int mSweepAngle = 240; // 绘制角度
     private int mMin = 1; // 最小值
-    private int mMax = 10; // 最大值
+    private int mMax = 100; // 最大值
     private int mSection = 10; // 值域（mMax-mMin）等分份数
-    private int mPortion = 3; // 一个mSection等分份数
+    private int mPortion = 4; // 一个mSection等分份数
     private String mHeaderText = "雾量"; // 表头
     private int mCreditValue ; // 信用分
     private int mSolidCreditValue = mCreditValue; // 信用分(设定后不变)
@@ -93,7 +93,7 @@ public class DashboardViewwl extends View {
         mPath = new Path();
         mRectText = new Rect();
 
-        mTexts = new String[]{"0", "", "1", "", "2", "", "3", "", "4", "", "5"};
+        mTexts = new String[]{"0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"};
         mBgColors = new int[]{ContextCompat.getColor(getContext(), R.color.color_red),
                 ContextCompat.getColor(getContext(), R.color.color_orange),
                 ContextCompat.getColor(getContext(), R.color.color_yellow),
@@ -291,7 +291,7 @@ public class DashboardViewwl extends View {
         mPaint.setTextSize(sp2px(18));
         mPaint.setTextAlign(Paint.Align.CENTER);
         String value = String.valueOf(mSolidCreditValue/2);
-        canvas.drawText(value+"档", mCenterX, mCenterY + dp2px(30), mPaint);
+        canvas.drawText(value+"%", mCenterX+ dp2px(1), mCenterY + dp2px(30), mPaint);
 
         /**
          * 画表头
@@ -376,41 +376,40 @@ public class DashboardViewwl extends View {
      * 相对起始角度计算信用分所对应的角度大小
      */
     private float calculateRelativeAngleWithValue(int value) {
-        float degreePerSection = 1f * mSweepAngle / mSection;
-        if (value >= 8 ) {
-            return 8 * degreePerSection + (value - 8) * degreePerSection;
-        } else if (value >= 6) {
-            return 6 * degreePerSection + (value - 6) * degreePerSection;
-        } else if (value >= 4) {
-            return 4 * degreePerSection + (value-4) * degreePerSection;
-        } else if (value >= 2) {
-            return 2 * degreePerSection + (value - 2) * degreePerSection;
-        } else  if(value == 1){
-            return 1 * degreePerSection ;
-        } else
-            return  0*degreePerSection;
+        float degreePerSection = 1f * mSweepAngle / (mSection*10);
+        if (value >= 80 ) {
+            return 80 * degreePerSection + (value - 80) * degreePerSection;
+        } else if (value >= 60) {
+            return 60 * degreePerSection + (value - 60) * degreePerSection;
+        } else if (value >= 40) {
+            return 40 * degreePerSection + (value-40) * degreePerSection;
+        } else if (value >= 20) {
+            return 20 * degreePerSection + (value - 20) * degreePerSection;
+        } else  if(value >= 10){
+            return 10 * degreePerSection+(value - 10) * degreePerSection;
+        } else  if(value >0){
+            return value * degreePerSection;
+        }else
+            return  0 * degreePerSection;
     }
 
     /**
      * 信用分对应信用描述
      */
     private String calculateCreditDescription() {
-        if (mSolidCreditValue == 10) {
+        if (mSolidCreditValue > 80) {
             return "雾量大";
-        } else if (mSolidCreditValue == 8) {
+        } else if (mSolidCreditValue > 60) {
             return "雾量较大";
-        } else if (mSolidCreditValue == 6) {
+        } else if (mSolidCreditValue> 40) {
             return "雾量中";
-        } else if (mSolidCreditValue == 4) {
+        } else if (mSolidCreditValue >20) {
             return "雾量较小";
-        } else if (mSolidCreditValue == 2) {
+        } else if (mSolidCreditValue > 0) {
             return "雾量小";
-        }else if (mSolidCreditValue == 0) {
+        }else
             return "关";
-        }
-        return "关";
     }
-
 
 
     public int getCreditValue() {

@@ -56,9 +56,6 @@ public class SearchBtActivity extends AppCompatActivity {
     TextView tvSerBleStatus;
     TextView wenben;
     ListView bleListView;
-    private Button btnWrite;
-    private Button btnRead;
-    private TextView tvResponse;
     private List<BluetoothDevice> mDatas;
     private List<Integer> mRssis;
     private BleAdapter mAdapter;

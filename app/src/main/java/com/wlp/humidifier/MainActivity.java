@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String actionshuju = "com.example.shuju.broadcast";
     public static final String actionend = "com.example.end.broadcast";
     private static final String TAG = "ble_tag";
-    private String[] strs = null;
     public String str = "-1";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -54,16 +54,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ActivityCollector.addActivity(this);//每启动一个Activity，就将其加入到activity列表中
         EventBus.getDefault().register(this);
+        intViewbar();
         android.support.v7.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Button sd = (Button) findViewById(R.id.sd);
-        Button wl = (Button) findViewById(R.id.wl);
         Button dingshi = (Button) findViewById(R.id.dingshi);
         TextView shidu = findViewById(R.id.shidu);
         TextView wendu = findViewById(R.id.wendu);
         Spinner spinner_shidu = (Spinner) findViewById(R.id.spinner_shidu);
-        Spinner spinner_wuliang = (Spinner) findViewById(R.id.spinner_wuliang);
         Spinner spinner_dingshi = (Spinner) findViewById(R.id.spinner_dingshi);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
@@ -135,43 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        /**************************  下拉菜单选项 雾量  ****************************************/
-
-        //原始string数组
-        final String[] spinnerItems_wl = {"雾量 1", "雾量 2", "雾量 3", "雾量 4", "雾量 5"};
-        //简单的string数组适配器：样式res，数组
-        ArrayAdapter<String> spinnerAdapter_wl = new ArrayAdapter<>(MainActivity.this,
-                android.R.layout.simple_spinner_item, spinnerItems_wl);
-        spinnerAdapter_wl.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //下拉的样式res
-        //绑定 Adapter到控件
-        spinner_wuliang.setAdapter(spinnerAdapter_wl);
-        //选择监听
-        spinner_wuliang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if ("雾量 1".equals(parent.getItemAtPosition(position).toString())) {
-                    commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x11, 0x00, 0x00, 0x00, (byte) 0x90};
-                }
-                if ("雾量 2".equals(parent.getItemAtPosition(position).toString())) {
-                    commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x12, 0x00, 0x00, 0x00, (byte) 0x90};
-                }
-                if ("雾量 3".equals(parent.getItemAtPosition(position).toString())) {
-                    commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x13, 0x00, 0x00, 0x00, (byte) 0x90};
-                }
-                if ("雾量 4".equals(parent.getItemAtPosition(position).toString())) {
-                    commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x14, 0x00, 0x00, 0x00, (byte) 0x90};
-                }
-                if ("雾量 5".equals(parent.getItemAtPosition(position).toString())) {
-                    commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x15, 0x00, 0x00, 0x00, (byte) 0x90};
-                }
-            }
-
-            @Override
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 /**************************  下拉菜单选项 定时  ****************************************/
 
         //原始string数组
@@ -225,15 +187,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        /******************* 雾量  **********************************************/
-
-        wl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                str = "b";
-                putShow();
-            }
-        });
         /******************* 定时  **********************************************/
 
         dingshi.setOnClickListener(new View.OnClickListener() {
@@ -246,6 +199,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*******************雾量0-100档位控制*****************************************/
+    private void intViewbar() {
+        SeekBar klala = (SeekBar) findViewById(R.id.sing);
+        final TextView JD = (TextView) findViewById(R.id.jindu);
+
+        klala.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                JD.setText(progress + "%");
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                     putShow();
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int p = seekBar.getProgress();
+                str = "b";
+                byte fog = (byte) (p & 0xFF);
+                commond_wl = new byte[]{(byte) 0xEB, 0x01, 0x11, 0x00, fog, 0x00, (byte) 0x90};
+                Toast.makeText(MainActivity.this, "雾量输出" + p + "%", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+    /*******************握手**************************************/
     public void putShow() {
         commind_ws = new byte[]{0x03, 0x01, 0x00, 0x07, 0x24};
         Intent intent = new Intent(action);
@@ -263,11 +242,11 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout.openDrawer(Gravity.START);
             return true;
         }
-         return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
 
-    /*************************  加湿器显示部分  ****************************************/
+    /*************************  加湿器发送指令部分  ****************************************/
 
     @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -340,8 +319,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }, 500);
                 }
-
-
                 break;
             case "o":           //关闭加湿器，结束 ///中断
                 if (messageEvent.length == 5 && messageEvent[1] == 0x02 && messageEvent[0] == 0x03 && messageEvent[3] == 0x00) {
@@ -364,7 +341,6 @@ public class MainActivity extends AppCompatActivity {
                             });
                         }
                     }, 500);
-
                 }
                 break;
             case "k":       //加湿器
@@ -397,58 +373,41 @@ public class MainActivity extends AppCompatActivity {
 
         TextView shiducanshu = findViewById(R.id.shiducanshu);
         TextView wenducanshu = findViewById(R.id.wenducanshu);
-        DashboardViewsw mDashboardView3 =  findViewById(R.id.viewsw);
-        DashboardViewwl mDashboardView2 =  findViewById(R.id.viewwl);
+        DashboardViewsw mDashboardView3 = findViewById(R.id.viewsw);
+        DashboardViewwl mDashboardView2 = findViewById(R.id.viewwl);
         if (messageEvent.length == 7 && messageEvent[0] == (byte) 0xeb && messageEvent[6] == (byte) 0x90) {    //判断头尾数据
             Log.d(TAG, "检验");
-            if (messageEvent[1] == 0x01) { //控指令符合
-                switch (messageEvent[2]) {//雾量
-                    case 0x11:  //1档
-                        mDashboardView2.setCreditValueWithAnim(2);
-                        break;
-                    case 0x12:    //2档
-                        mDashboardView2.setCreditValueWithAnim(4);
-                        break;
-                    case 0x13:   //3档
-                        mDashboardView2.setCreditValueWithAnim(6);
-                        break;
-                    case 0x14:   //4档
-                        mDashboardView2.setCreditValueWithAnim(8);
-                        break;
-                    case 0x15:   //5档
-                        mDashboardView2.setCreditValueWithAnim(10);
-                        break;
-                }
-            } else if (messageEvent[1] == 0x12) {          //有无水传感器  会报警
-                int a = messageEvent[4];  //转换10进制
-
-            } else if (messageEvent[1] == 0x32) {          // 水位
-                final int d = messageEvent[4];  //转换10进制
-                mDashboardView3.setCreditValueWithAnim(d);  //                       水位仪表盘  识别1-10  显示无延迟  0有延迟
-            } else if (messageEvent[1] == 0x11) {          //温度 /湿度
-                switch (messageEvent[2]) {
-                    case 0x00:
-                        int a = messageEvent[3];
-                        int c = (((a * 256 & 0xFF00) | (messageEvent[4] & 0x00FF)) & 0xFFFC); //温度算法       温度精度14位
-                        Log.e(TAG, String.valueOf(c));
-                        double d = ((c / 65536.0) * 175.72 - 46.85);
-                        String cc = String.format("%.2f", d);
-                        wenducanshu.setText(cc + "℃");
-                        break;
-                    case 0x01:
-                        int b = messageEvent[3];
-                        int shidu = (((b * 256 & 0xFF00) | (messageEvent[4] & 0x00FF)) & 0xFFF0);  //湿度精度只有12位
-                        double g = (shidu / 65536.0) * 125 - 6;
-                        String bb = String.format("%.2f", g);
-                        shiducanshu.setText(bb + "%");           //液态水的湿度
-                        break;
-
-
-                }
+            if (messageEvent[1] == 0x01 && messageEvent[2] == 0x11) { //控指令符合
+                int progressfog = messageEvent[4];
+                mDashboardView2.setCreditValueWithAnim(progressfog);  //雾量大小显示
             }
+        } else if (messageEvent[1] == 0x12) {          //有无水传感器  会报警
+            mDashboardView3.setCreditValueWithAnim(0);
+        } else if (messageEvent[1] == 0x32) {          // 水位
+            final int d = messageEvent[4];  //转换10进制
+            mDashboardView3.setCreditValueWithAnim(d);  //                       水位仪表盘  识别1-10  显示无延迟  0有延迟
+        } else if (messageEvent[1] == 0x11) {          //温度 /湿度
+            switch (messageEvent[2]) {
+                case 0x00:
+                    int a = messageEvent[3];
+                    int c = (((a * 256 & 0xFF00) | (messageEvent[4] & 0x00FF)) & 0xFFFC); //温度算法       温度精度14位
+                    Log.e(TAG, String.valueOf(c));
+                    double d = ((c / 65536.0) * 175.72 - 46.85);
+                    String cc = String.format("%.2f", d);
+                    wenducanshu.setText(cc + "℃");
+                    break;
+                case 0x01:
+                    int b = messageEvent[3];
+                    int shidu = (((b * 256 & 0xFF00) | (messageEvent[4] & 0x00FF)) & 0xFFF0);  //湿度精度只有12位
+                    double g = (shidu / 65536.0) * 125 - 6;
+                    String bb = String.format("%.2f", g);
+                    shiducanshu.setText(bb + "%");           //液态水的湿度
+                    break;
 
 
+            }
         }
+
         /********************************************接收的握手协议**************************************************/
         if (messageEvent.length == 5 && messageEvent[0] == 3 && messageEvent[1] == 1 && messageEvent[3] == 7) {
             commond_js = new byte[]{0x03, 0x02, 0x00, 0x00, 0x15};
@@ -457,12 +416,6 @@ public class MainActivity extends AppCompatActivity {
             sendBroadcast(intent);
         }
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //  putShow();
     }
 
     @Override        //注销EvevtBus

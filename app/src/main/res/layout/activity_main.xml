@@ -16,10 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
 
-            app:title="@string/app_name"
-            app:titleTextColor="@color/white"
             android:background="@color/colorPrimary"
-            android:minHeight="36dp"/>
+            android:minHeight="36dp"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/white" />
 
 
         <RelativeLayout
@@ -39,16 +39,45 @@
                 android:layout_width="540px"
                 android:layout_height="540px"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/viewsw"
-                android:layout_marginTop="1sp"/>
+                android:layout_marginTop="1sp"
+                android:layout_toRightOf="@+id/viewsw" />
+
+            <TextView
+                android:id="@+id/wlshezhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewwl"
+                android:text="雾量调节："
+                android:layout_centerVertical="true"
+                android:background="@drawable/bt_textview"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/jindu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewwl"
+                android:layout_toRightOf="@+id/wlshezhi"
+               android:layout_alignTop="@+id/wlshezhi"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp" />
+
+            <SeekBar
+                android:id="@+id/sing"
+                style="@style/CustomSeekbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/viewsw"
+                android:layout_marginTop="38dp"
+                android:background="@drawable/bt_progress" />
+
 
             <TextView
                 android:id="@+id/shidu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/viewsw"
+                android:layout_below="@+id/sing"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
                 android:drawableLeft="@mipmap/shidu"
                 android:drawablePadding="10dp"
                 android:text="湿     度："
@@ -108,7 +137,7 @@
                 android:layout_below="@+id/wendu"
                 android:layout_marginTop="25dp"
                 android:layout_toRightOf="@id/spinner_shidu"
-                android:background="@drawable/bt"
+                android:background="@drawable/bt_textview"
                 android:drawableLeft="@mipmap/shidu"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
@@ -116,38 +145,11 @@
                 android:text="湿度"
                 android:textSize="17dp" />
 
-
-            <Spinner
-                android:id="@+id/spinner_wuliang"
-                android:layout_width="500px"
-                android:layout_height="50dp"
-                android:layout_below="@+id/spinner_shidu"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="5dp"
-                android:entries="@array/雾量"
-                android:spinnerMode="dialog" />
-
-            <Button
-                android:id="@+id/wl"
-                android:layout_width="300px"
-                android:layout_height="40dp"
-                android:layout_below="@+id/sd"
-                android:layout_marginTop="15dp"
-                android:layout_toRightOf="@id/spinner_wuliang"
-                android:background="@drawable/bt"
-                android:drawableLeft="@mipmap/wuhua"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="雾量"
-                android:textSize="17dp" />
-
-
             <Spinner
                 android:id="@+id/spinner_dingshi"
                 android:layout_width="500px"
                 android:layout_height="50dp"
-                android:layout_below="@+id/spinner_wuliang"
+                android:layout_below="@+id/spinner_shidu"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="5dp"
                 android:entries="@array/定时"
@@ -157,10 +159,10 @@
                 android:id="@+id/dingshi"
                 android:layout_width="300px"
                 android:layout_height="40dp"
-                android:layout_below="@+id/wl"
+                android:layout_below="@+id/sd"
                 android:layout_marginTop="15dp"
                 android:layout_toRightOf="@id/spinner_dingshi"
-                android:background="@drawable/bt"
+                android:background="@drawable/bt_textview"
                 android:drawableLeft="@mipmap/dingshi"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
