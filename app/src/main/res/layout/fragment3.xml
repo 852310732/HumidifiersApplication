@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.weigan.loopview.LoopView
+        android:id="@+id/loopView_3"
+        android:layout_width="600px"
+        android:layout_height="150dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/title_time_3"
+        app:awv_isLoop="false"
+        app:awv_textsize="20" />
+
+    <TextView
+        android:id="@+id/title_time_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/bt_textview"
+        android:layout_marginStart="20dp"
+        android:text="恒湿："
+        android:textSize="20sp" />
+    <Button
+        android:id="@+id/quegding_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/loopView_3"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bt_qwe"
+        android:layout_toRightOf="@+id/loopView_3"
+        android:textSize="18sp"
+        android:text="确定" />
+</RelativeLayout>

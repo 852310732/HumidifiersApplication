@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -47,18 +48,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/viewwl"
-                android:text="雾量调节："
                 android:layout_centerVertical="true"
                 android:background="@drawable/bt_textview"
+                android:text="雾量调节："
                 android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/jindu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/viewwl"
-                android:layout_toRightOf="@+id/wlshezhi"
-               android:layout_alignTop="@+id/wlshezhi"
+                android:layout_alignTop="@+id/wlshezhi"
                 android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/wlshezhi"
                 android:textSize="15sp" />
 
             <SeekBar
@@ -66,128 +68,34 @@
                 style="@style/CustomSeekbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_below="@id/viewsw"
-                android:layout_marginTop="38dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="42dp"
                 android:background="@drawable/bt_progress" />
 
-
-            <TextView
-                android:id="@+id/shidu"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/mytab"
                 android:layout_below="@+id/sing"
-                android:layout_marginStart="20dp"
-                android:drawableLeft="@mipmap/shidu"
-                android:drawablePadding="10dp"
-                android:text="湿     度："
-                android:textSize="25sp" />
+                android:layout_alignParentRight="true" />
 
-            <TextView
-                android:id="@+id/shiducanshu"
-                android:layout_width="wrap_content"
+            <android.support.design.widget.TabLayout
+                android:id="@+id/mytab"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/shidu"
-                android:layout_marginTop="0dp"
-                android:layout_toRightOf="@+id/shidu"
-                android:textSize="24sp" />
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="2dp"
+                app:tabIndicatorColor="#4DD0E1"
+                app:tabIndicatorFullWidth="false"
+                app:tabMode="fixed"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextColor="#4DD0E1">
+
+            </android.support.design.widget.TabLayout>
 
 
-            <TextView
-                android:id="@+id/wendu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/shidu"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/wendu"
-                android:drawablePadding="10dp"
-                android:text="温     度："
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/wenducanshu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/wendu"
-                android:layout_alignBottom="@+id/wendu"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:layout_toRightOf="@+id/wendu"
-                android:textSize="24sp" />
-
-            <Spinner
-                android:id="@+id/spinner_shidu"
-                android:layout_width="500px"
-                android:layout_height="50dp"
-                android:layout_below="@+id/wendu"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="20dp"
-                android:entries="@array/湿度"
-                android:gravity="center"
-                android:spinnerMode="dialog"
-
-
-                />
-
-            <Button
-                android:id="@+id/sd"
-                android:layout_width="300px"
-                android:layout_height="40dp"
-                android:layout_below="@+id/wendu"
-                android:layout_marginTop="25dp"
-                android:layout_toRightOf="@id/spinner_shidu"
-                android:background="@drawable/bt_textview"
-                android:drawableLeft="@mipmap/shidu"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="湿度"
-                android:textSize="17dp" />
-
-            <Spinner
-                android:id="@+id/spinner_dingshi"
-                android:layout_width="500px"
-                android:layout_height="50dp"
-                android:layout_below="@+id/spinner_shidu"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="5dp"
-                android:entries="@array/定时"
-                android:spinnerMode="dialog" />
-
-            <Button
-                android:id="@+id/dingshi"
-                android:layout_width="300px"
-                android:layout_height="40dp"
-                android:layout_below="@+id/sd"
-                android:layout_marginTop="15dp"
-                android:layout_toRightOf="@id/spinner_dingshi"
-                android:background="@drawable/bt_textview"
-                android:drawableLeft="@mipmap/dingshi"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="定时"
-                android:textColor="#000"
-                android:textSize="17dp" />
-
-            <TextView
-                android:id="@+id/shidushijishuju"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/spinner_dingshi"
-                android:layout_alignLeft="@+id/spinner_dingshi"
-                android:textSize="25dp"
-
-                />
-
-            <TextView
-                android:id="@+id/wendushijishuju"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/shidushijishuju"
-                android:layout_alignLeft="@+id/shidushijishuju"
-                android:textSize="25dp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -197,5 +105,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu"></android.support.design.widget.NavigationView>
+        app:menu="@menu/nav_menu">
+
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

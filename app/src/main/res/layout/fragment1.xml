@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:id="@+id/shidu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/wendu"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="26dp"
+        android:drawableLeft="@mipmap/shidu"
+        android:drawablePadding="10dp"
+        android:background="@drawable/bt_textview"
+        android:text="湿  度："
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/shiducanshu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/shidu"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/shidu"
+        android:textSize="21sp"
+        />
+
+    <TextView
+        android:id="@+id/wendu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:background="@drawable/bt_textview"
+        android:layout_marginTop="56dp"
+        android:drawableLeft="@mipmap/wendu"
+        android:drawablePadding="10dp"
+        android:text="温  度："
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/wenducanshu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/wendu"
+        android:layout_alignBottom="@+id/wendu"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toRightOf="@+id/wendu"
+        android:textSize="21sp" />
+
+
+</RelativeLayout>
